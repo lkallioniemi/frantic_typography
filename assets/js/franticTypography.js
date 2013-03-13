@@ -80,7 +80,7 @@ function franticTypography(elements) {
 			}
 			
 			context.globalCompositeOperation = 'source-atop';
-			context.drawImage(canvas1, 0, 0);
+			context.drawImage(canvas1, -1, 0);
 			
 			children[i].style.backgroundImage = "url(" + canvas.toDataURL("image/png") + ")";
 			children[i].style.backgroundPosition = 'right 50%';
