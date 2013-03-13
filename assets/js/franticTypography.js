@@ -51,9 +51,11 @@ function franticTypography(elements) {
 
 		for (i = 0; i < children.length; i++) {
 			var canvas = document.createElement('canvas');
+			var canvas1 = document.createElement('canvas');
+			
 			var font = styles.fontStyle + ' ' + styles.fontWeight + ' ' + styles.fontSize + ' ' + styles.fontFamily;
-			canvas.width = children[i].width * 2;
-			canvas.height = styles.height;
+			canvas.width = canvas1.width = children[i].width * 2;
+			canvas.height = canvas1.height = styles.height;
 
 			var context = canvas.getContext('2d');
 			context.fillStyle = styles.textColor;
@@ -65,17 +67,21 @@ function franticTypography(elements) {
 
 			context.fillText(children[i].childNodes[0].nodeValue, children[i].width, styles.height * 0.78);
 
-			context.globalCompositeOperation = 'source-atop';
-
-			context.shadowColor = styles.textShadow.color;
-			context.shadowOffsetX = parseInt(styles.textShadow.position[0], 10);
-			context.shadowOffsetY = parseInt(styles.textShadow.position[1], 10);
-			context.shadowBlur = parseInt(styles.textShadow.position[2], 10);
+			var context1 = canvas1.getContext('2d');
+			context1.font = font;
+			context1.fillStyle = styles.textShadow.color;
+			context1.shadowColor = styles.textShadow.color;
+			context1.shadowOffsetX = parseInt(styles.textShadow.position[0], 10);
+			context1.shadowOffsetY = parseInt(styles.textShadow.position[1], 10);
+			context1.shadowBlur = parseInt(styles.textShadow.position[2], 10);
 
 			if (i > 0) {
-				context.fillText(children[i - 1].childNodes[0].nodeValue, children[i].width - children[i - 1].width - styles.kerning, styles.height * 0.78);
+				context1.fillText(children[i - 1].childNodes[0].nodeValue, children[i].width - children[i - 1].width - styles.kerning, styles.height * 0.78);
 			}
-
+			
+			context.globalCompositeOperation = 'source-atop';
+			context.drawImage(canvas1, 0, 0);
+			
 			children[i].style.backgroundImage = "url(" + canvas.toDataURL("image/png") + ")";
 			children[i].style.backgroundPosition = 'right 50%';
 			children[i].style.backgroundRepeat = 'no-repeat';
