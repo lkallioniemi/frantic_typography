@@ -43,12 +43,7 @@ function franticTypography(elements) {
 		for (i = 0; i < text.length; i++) {
 			var child = document.createElement('span');
 			elements[e].appendChild(child);
-<<<<<<< HEAD
-			child.innerText = text[i];
-=======
-			console.log(text[i]);
 			child.textContent = text[i];
->>>>>>> gh-pages
 			child.style.zIndex = text.length - i;
 			child.width = child.offsetWidth;
 			children.push(child);
