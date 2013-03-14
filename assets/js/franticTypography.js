@@ -35,60 +35,65 @@ function franticTypography(elements) {
 			};
 		}
 		text = (styles.textTransform == 'uppercase') ? text.toUpperCase() : text;
-		text = text.split('');
-
+		words = text.split(' ');
 		elements[e].innerHTML = '';
-		elements[e].style.letterSpacing = 0;
-		var children = [];
-		for (i = 0; i < text.length; i++) {
-			var child = document.createElement('span');
-			elements[e].appendChild(child);
-			child.textContent = text[i];
-			child.style.zIndex = text.length - i;
-			child.width = child.offsetWidth;
-			children.push(child);
-		}
-
-		for (i = 0; i < children.length; i++) {
-			var canvas = document.createElement('canvas');
-			var canvas1 = document.createElement('canvas');
-			
-			var font = styles.fontStyle + ' ' + styles.fontWeight + ' ' + styles.fontSize + ' ' + styles.fontFamily;
-			canvas.width = canvas1.width = children[i].width * 2;
-			canvas.height = canvas1.height = styles.height;
-
-			var context = canvas.getContext('2d');
-			context.fillStyle = styles.textColor;
-			context.font = font;
-			context.shadowColor = styles.textColor;
-			context.shadowOffsetX = 0;
-			context.shadowOffsetY = 0;
-			context.shadowBlur = 2;
-
-			context.fillText(children[i].childNodes[0].nodeValue, children[i].width, styles.height * 0.78);
-
-			var context1 = canvas1.getContext('2d');
-			context1.font = font;
-			context1.fillStyle = styles.textShadow.color;
-			context1.shadowColor = styles.textShadow.color;
-			context1.shadowOffsetX = parseInt(styles.textShadow.position[0], 10);
-			context1.shadowOffsetY = parseInt(styles.textShadow.position[1], 10);
-			context1.shadowBlur = parseInt(styles.textShadow.position[2], 10);
-
-			if (i > 0) {
-				context1.fillText(children[i - 1].childNodes[0].nodeValue, children[i].width - children[i - 1].width - styles.kerning, styles.height * 0.78);
+		for (j = 0; j < words.length; j++) {
+			var wordcontainer = document.createElement('span');
+			characters = words[j].split('');
+			elements[e].style.letterSpacing = 0;
+			var children = [];
+			elements[e].appendChild(wordcontainer);
+			for (i = 0; i < characters.length; i++) {
+				var child = document.createElement('span');
+				wordcontainer.appendChild(child);
+				child.textContent = characters[i];
+				child.style.zIndex = characters.length - i;
+				child.width = child.offsetWidth;
+				children.push(child);
 			}
 			
-			context.globalCompositeOperation = 'source-atop';
-			context.drawImage(canvas1, -1, 0);
-			
-			children[i].style.backgroundImage = "url(" + canvas.toDataURL("image/png") + ")";
-			children[i].style.backgroundPosition = 'right 50%';
-			children[i].style.backgroundRepeat = 'no-repeat';
-			children[i].style.color = 'rgba(255,255,255,0.1)';
-			children[i].style.position = 'relative';
-			children[i].style.textShadow = 'none';
-			children[i].style.marginLeft = styles.kerning + 'px';
+	
+			for (i = 0; i < children.length; i++) {
+				var canvas = document.createElement('canvas');
+				var canvas1 = document.createElement('canvas');
+				
+				var font = styles.fontStyle + ' ' + styles.fontWeight + ' ' + styles.fontSize + ' ' + styles.fontFamily;
+				canvas.width = canvas1.width = children[i].width * 2;
+				canvas.height = canvas1.height = styles.height;
+	
+				var context = canvas.getContext('2d');
+				context.fillStyle = styles.textColor;
+				context.font = font;
+				context.shadowColor = styles.textColor;
+				context.shadowOffsetX = 0;
+				context.shadowOffsetY = 0;
+				context.shadowBlur = 2;
+	
+				context.fillText(children[i].childNodes[0].nodeValue, children[i].width, styles.height * 0.78);
+	
+				var context1 = canvas1.getContext('2d');
+				context1.font = font;
+				context1.fillStyle = styles.textShadow.color;
+				context1.shadowColor = styles.textShadow.color;
+				context1.shadowOffsetX = parseInt(styles.textShadow.position[0], 10);
+				context1.shadowOffsetY = parseInt(styles.textShadow.position[1], 10);
+				context1.shadowBlur = parseInt(styles.textShadow.position[2], 10);
+	
+				if (i > 0) {
+					context1.fillText(children[i - 1].childNodes[0].nodeValue, children[i].width - children[i - 1].width - styles.kerning, styles.height * 0.78);
+				}
+				
+				context.globalCompositeOperation = 'source-atop';
+				context.drawImage(canvas1, -1, 0);
+				
+				children[i].style.backgroundImage = "url(" + canvas.toDataURL("image/png") + ")";
+				children[i].style.backgroundPosition = 'right 50%';
+				children[i].style.backgroundRepeat = 'no-repeat';
+				children[i].style.color = 'rgba(255,255,255,0.1)';
+				children[i].style.position = 'relative';
+				children[i].style.textShadow = 'none';
+				children[i].style.marginLeft = styles.kerning + 'px';
+			}
 		}
 	}
 }
