@@ -1,6 +1,7 @@
 function franticTypography(elements) {
 	for (e = 0; e < elements.length; e++) {
 		var styles, text = elements[e].childNodes[0].nodeValue;
+		elements[e].style.whiteSpace = "nowrap";
 		if (elements[e].currentStyle) { //IE
 			temp = elements[e].currentStyle["text-shadow"].split('px ');
 			styles = {
